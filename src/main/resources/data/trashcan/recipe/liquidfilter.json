@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BPB",
+    "PRP",
+    "BPB"
+  ],
+  "key": {
+    "B": "minecraft:bucket",
+    "P": "minecraft:paper",
+    "R": "#c:dusts/redstone"
+  },
+  "result": {
+    "id": "trashcan:liquid_filter"
+  }
+}

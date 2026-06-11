@@ -1,0 +1,10 @@
+{
+  "block.trashcan.trash_can": "Lixeira",
+  "item.trashcan.trash_can": "Lixeira",
+  "item.trashcan.item_filter": "Filtro de Itens",
+  "item.trashcan.liquid_filter": "Filtro de Liquidos",
+  "trashcan.gui.trash_can.title": "Lixeira",
+  "trashcan.gui.trash_filter.title": "Filtro da Lixeira",
+  "trashcan.gui.whitelist.on": "Lista Branca",
+  "trashcan.gui.whitelist.off": "Lista Negra"
+}

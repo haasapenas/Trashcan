@@ -1,0 +1,102 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+group = maven_group
+version = "${mod_version}-[NEOFORGE]-${minecraft_suffix.replace('mc', '')}"
+
+base {
+    archivesName = 'TrashCan'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(java_target as int)
+    }
+}
+
+println "Building ${mod_name} with Java ${System.getProperty('java.version')} (${System.getProperty('os.arch')})"
+
+def curseMaven = { String slugAndProject, Object fileId ->
+    "curse.maven:${slugAndProject}:${fileId}"
+}
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'CurseMaven'
+                url = uri('https://www.cursemaven.com')
+                metadataSources { artifact() }
+            }
+        }
+        filter { includeGroup 'curse.maven' }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = uri('https://api.modrinth.com/maven')
+            }
+        }
+        filter { includeGroup 'maven.modrinth' }
+    }
+    maven {
+        name = 'SpongePowered'
+        url = uri('https://repo.spongepowered.org/maven')
+    }
+}
+
+dependencies {
+    compileOnly curseMaven('jei-238222', just_enough_items_file)
+}
+
+tasks.named('compileJava', JavaCompile).configure {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.add '-parameters'
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    inputs.property 'modVersion', version
+
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+        Map<String, ?> placeholders = project.properties.clone() as Map<String, ?>
+        def cleanVersion = placeholders.mod_version as String
+        def suffixMatcher = java.util.regex.Pattern.compile('[^.0-9]').matcher(cleanVersion)
+        if(suffixMatcher.find())
+            cleanVersion = cleanVersion.substring(0, suffixMatcher.start()) + '+' + cleanVersion.substring(suffixMatcher.start())
+        placeholders.mod_version = cleanVersion
+        expand placeholders
+    }
+
+    exclude '**/*.pdn'
+    rename '^icon.png$', "${mod_id}.png"
+}
+
+neoForge {
+    version = neoforge_version
+
+    mods {
+        trashcan {
+            sourceSet sourceSets.main
+        }
+    }
+
+    runs {
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+
+        client {
+            client()
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+        }
+}
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "IHI",
+    "ICI"
+  ],
+  "key": {
+    "I": "#c:ingots/iron",
+    "H": "minecraft:hopper",
+    "C": "#c:chests/wooden"
+  },
+  "result": {
+    "id": "trashcan:trash_can"
+  }
+}

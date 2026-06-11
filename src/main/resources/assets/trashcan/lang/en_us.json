@@ -1,0 +1,10 @@
+{
+  "block.trashcan.trash_can": "Trash Can",
+  "item.trashcan.trash_can": "Trash Can",
+  "item.trashcan.item_filter": "Item Trash Filter",
+  "item.trashcan.liquid_filter": "Liquid Trash Filter",
+  "trashcan.gui.trash_can.title": "Trash Can",
+  "trashcan.gui.trash_filter.title": "Trash Filter",
+  "trashcan.gui.whitelist.on": "Whitelist",
+  "trashcan.gui.whitelist.off": "Blacklist"
+}
